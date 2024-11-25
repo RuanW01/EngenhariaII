@@ -1,0 +1,92 @@
+# Projeto de Sistema de Reservas de Passagens Aéreas
+
+## Etapas do Projeto
+
+### a) Descrição Textual dos Casos de Uso
+
+| Nome do Caso de Uso      | Descrição                                                                 |
+|--------------------------|---------------------------------------------------------------------------|
+| Iniciar Reserva          | Permite que o cliente inicie o processo de reserva de passagens.          |
+| Efetivar Reserva         | Confirma a reserva e gera uma venda de passagem aérea.                   |
+| Alterar Reserva          | Modifica os dados de uma reserva existente.                              |
+| Cancelar Reserva         | Cancela uma reserva antes do prazo de 30 dias ou pela falta de pagamento.|
+
+---
+
+### b) Diagrama de Casos de Uso
+```plantuml
+@startuml
+actor Cliente
+actor Administrador
+
+usecase "Iniciar Reserva" as UC1
+usecase "Efetivar Reserva" as UC2
+usecase "Alterar Reserva" as UC3
+usecase "Cancelar Reserva" as UC4
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+Administrador --> UC4
+@enduml
+```
+
+---
+
+### c) Modelo de Domínio
+```plantuml
+@startuml
+class Cliente {
+    +CPF: String
+    +Nome: String
+    +Email: String
+    +Telefone: String
+}
+
+class PessoaFisica {
+    +RG: String
+    +DataNascimento: Date
+}
+
+class PessoaJuridica {
+    +CNPJ: String
+    +NomeEmpresa: String
+}
+
+class Reserva {
+    +Codigo: String
+    +Data: Date
+    +Status: String
+}
+
+class Aeronave {
+    +RAB: String
+    +Tipo: String
+    +NumeroAssentos: int
+}
+
+class Voo {
+    +Codigo: String
+    +Origem: String
+    +Destino: String
+    +HorarioSaida: DateTime
+    +HorarioChegada: DateTime
+    +Quilometragem: float
+}
+
+class Piloto {
+    +CPF: String
+    +Nome: String
+    +Breve: String
+    +Contato: String
+}
+
+Cliente <|-- PessoaFisica
+Cliente <|-- PessoaJuridica
+Reserva --> Cliente
+Reserva --> Voo
+Reserva --> Aeronave
+Voo --> Piloto
+@enduml
+```
